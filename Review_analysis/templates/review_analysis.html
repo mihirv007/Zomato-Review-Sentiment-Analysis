@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width,initial-scale=1.0'>
+
+    <link rel='stylesheet' href="{{url_for('static',filename='review_analysis.css')}}">
+
+    <title>REVIEW</title>
+
+</head>
+<body>
+    <h1>Zomato Review Analysis</h1>
+    <main>
+        <form action='upload' method='POST'>
+            <div class='container'>
+                <div class='inputbox'>
+                    <input type='text' name='review' placeholder="enter your review here... " required>
+                </div>
+                <button type="submit"><span>SEND</span></button>
+            </div>
+        </form>
+        {%if prediction%}
+            <div class='result' id='resultBox'>
+                <h2>Result</h2>
+                <p>{{prediction}}</p>
+            </div>
+        {%endif%}
+    </main>
+</body>
+<script>
+    const textInput=document.querySelector("input[type='text']");
+    const resultBox=document.getElementById('resultBox')
+
+    textInput.addEventListener('change',()=>{
+        if(resultBox){
+            resultBox.style.display='none';
+        }
+    })
+
+</script>
+
+</html>
