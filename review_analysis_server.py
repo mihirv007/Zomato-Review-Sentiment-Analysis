@@ -15,10 +15,14 @@ Classifier=joblib.load('review_analysis_classifier.pkl')
 
 corpus=[]
 
-app=Flask(__name__)
+# Tell Flask where to find templates and static files inside the subfolder
+app = Flask(__name__, 
+            template_folder='Review_analysis/templates', 
+            static_folder='Review_analysis/static')
 @app.route('/')
 def upload_review():
     return render_template('review_analysis.html')
+
 
 @app.route('/upload',methods=['POST'])
 def predict():
