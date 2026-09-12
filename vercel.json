@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/Review_analysis/review_analysis_server.py"
+      "destination": "/review_analysis_server.py"
     }
   ]
 }
