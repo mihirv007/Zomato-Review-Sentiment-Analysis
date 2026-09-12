@@ -16,11 +16,15 @@ except Exception as e:
     print(f"NLTK download error: {e}")
 # -------------------------------------
 
-app = Flask(__name__)
+# --- ABSOLUTE PATH SETUP FOR VERCEL ---
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Load Vectorizer and classifier safely with fallback error prints
+app = Flask(__name__, 
+            template_folder=os.path.join(BASE_DIR, 'templates'),
+            static_folder=os.path.join(BASE_DIR, 'static'))
+
+# Load Vectorizer and classifier safely
 try:
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     vectorizer_path = os.path.join(BASE_DIR, 'review_analysis_tfidVectorizer.pkl')
     classifier_path = os.path.join(BASE_DIR, 'review_analysis_classifier.pkl')
     
