@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "review_analysis_server.py",
+      "src": "api/index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "destination": "/review_analysis_server.py"
+      "destination": "/api/index.py"
     }
   ]
 }
