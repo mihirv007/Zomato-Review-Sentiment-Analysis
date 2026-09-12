@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-from jinja2 import Environment, FileSystemLoader
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
 import joblib
@@ -20,11 +19,9 @@ except Exception as e:
 # --- ABSOLUTE PATH SETUP FOR VERCEL ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-app = Flask(__name__)
-
-# Explicitly bind Jinja to the absolute templates folder path
-template_dir = os.path.join(BASE_DIR, 'templates')
-env = Environment(loader=FileSystemLoader(template_dir))
+app = Flask(__name__, 
+            template_folder=os.path.join(BASE_DIR, 'templates'),
+            static_folder=os.path.join(BASE_DIR, 'static'))
 
 # Load Vectorizer and classifier safely
 try:
@@ -38,8 +35,7 @@ except Exception as e:
 
 @app.route('/')
 def upload_review():
-    template = env.get_template('review_analysis.html')
-    return template.render()
+    return render_template('review_analysis.html')
 
 @app.route('/upload', methods=['POST'])
 def predict():
@@ -61,9 +57,7 @@ def predict():
         prediction = Classifier.predict(X_new)
 
         predicted = 'Liked' if prediction[0] == 1 else 'not liked'
-        
-        template = env.get_template('review_analysis.html')
-        return template.render(prediction=predicted)
+        return render_template('review_analysis.html', prediction=predicted)
     except Exception as e:
         return f"An error occurred during prediction: {str(e)}", 500
 
